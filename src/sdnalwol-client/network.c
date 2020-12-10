@@ -12,7 +12,7 @@ int main()
 	char recv_data[256];
 
 	// create a socket.
-	int socket_fd, bytes_read;
+	int socket_fd, bytes_read, bytes_sent;
 	socket_fd = socket(AF_INET, SOCK_STREAM, 0);
 
 	// specify an address for the socket.
@@ -35,11 +35,17 @@ int main()
 	while (is_connected == 0) { // while connection is held.
 
 		bytes_read = recv(socket_fd, recv_data, sizeof(recv_data), 0);
-		send(socket_fd, recv_data, sizeof(recv_data), 0);
+		printf("%d bytes of data: %s\n", bytes_read, recv_data);
 
+		bytes_sent = send(socket_fd, recv_data, bytes_read, 0);
+		
+		if (bytes_sent != -1) {
+			printf("%d bytes sent\n", bytes_sent);
+		} else {
+			printf("Failed to send data, connection lost\n");
+		}
 
 		memset(recv_data, '\0', 256); // reset the data buffer for the next message.
-		sleep(1000);
 	}
 	
 

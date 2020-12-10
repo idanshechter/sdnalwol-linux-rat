@@ -11,11 +11,14 @@ print("[>] Server is waiting for connection.\n")
 
 client_socket, client_address = sock.accept()
 print(f"Connection established!\n")
-client_socket.send(bytes("hey", "utf-8")) #connection message
 
 while True:
 
-    command = input('>> ')    
+    command = input('>> ')
 
-    client_response = sock.recv(1024)
-    print(client_response.decode("utf-8"))
+    try:
+        client_socket.send(bytes(command, "utf-8"))
+    except: 
+        print(f"Failed to send message!\n")
+
+
