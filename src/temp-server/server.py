@@ -21,4 +21,8 @@ while True:
     except: 
         print(f"Failed to send message!\n")
 
+    data = client_socket.recv(1024)
+    print(data)
+
+
 
