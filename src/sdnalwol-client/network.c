@@ -9,7 +9,7 @@
 
 // the function creates the communcation socket, and connects it to the requested server.
 // the connection's socket fd will be returned on success, -1 on failure.
-
+// On later versions, ip address & port will be requested to compile the client.
 int server_connect()
 { 
 	int socket_fd;
