@@ -29,7 +29,8 @@ int server_connect()
 }
 
 // the function reads data from the socket stream.
-// the returned value is the received data, which is a string (text
+// the returned value is the number of bytes read from the socket, if reading failed -1 will be returned.
+// the function updated the recv_data with the received data.
 int receive_data(int socket_fd, char* recv_data)
 {
 	int bytes_read;
@@ -43,7 +44,7 @@ int receive_data(int socket_fd, char* recv_data)
 }
 
 // the function sends data to the socket specified by the fd
-int send_data(int socket_fd, const char* data)
+int send_data(int socket_fd, char* data)
 {
 	int bytes_sent = send(socket_fd, data, sizeof(data), 0);
 	
