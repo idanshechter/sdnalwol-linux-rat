@@ -18,10 +18,10 @@ while True:
 
     try:
         client_socket.send(bytes(command, "utf-8"))
+        print(client_socket.recv(1024))
     except: 
         print(f"Failed to send message!\n")
 
-    print(client_socket.recv(1024))
 
 
 

