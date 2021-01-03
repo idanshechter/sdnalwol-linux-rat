@@ -26,7 +26,8 @@ while True:
     elif command == "getshell":
         client_socket.send(bytes(command, "utf-8"))
         time.sleep(1)
-
+        response = client_socket.recv(1024).decode('utf-8')
+        print(response)
     else:
         print("Unknown command.\n")
 

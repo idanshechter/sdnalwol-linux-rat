@@ -52,22 +52,27 @@ int receive_data(int socket_fd, char* recv_data)
 
 
 // the function sends data to the socket specified by the fd
-int send_data(int socket_fd, char* data)
+int send_data(int socket_fd, const char* data)
 {
-	int bytes_sent = send(socket_fd, data, sizeof(data), 0);
+	int total_sent = 0, bytes_sent = 0;
+	int total_data = strlen(data);
 
-	if (bytes_sent == sizeof(data)) { // send() returns the number of bytes sent, therefore we can know that "data" was sent fully.
-		printf("Sent: %s\n", data); // For debugging.
-		return 0;
-	} else {
-		return -1;
+	while (total_data > total_sent) {
+       		bytes_sent = send(socket_fd, data + total_sent, sizeof(data), 0);
+		
+		if (bytes_sent < 0)
+			return -1;
+
+		total_sent += bytes_sent;
 	}
+
+	return total_sent;
 }
 
 
 
-
-// the function is used to check the connection status by sending a message to the server and checking if the message was fully sent.
+// the function is used to check the connection status by sending a message to
+// the server and checking if the message was fully sent.
 int check_connection(int socket_fd)
 {
 	char* ping = "ping";

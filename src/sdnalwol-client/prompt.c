@@ -11,10 +11,12 @@
 // the function returns the system's name, version, release, and architecture.
 // sysname isn't returned because the hosting machine is probably linux (duh).
 
-const char* get_system_info() 
+const char* get_system_info()
 {
+
 	char *failure = "Failed to get system info!\n";
 	char *success = malloc(128 * sizeof(success));
+
 	struct utsname system_info; // Used to store system data returned from uname().
 
 	if (uname(&system_info) != 0) {
@@ -33,7 +35,7 @@ const char* get_system_info()
 		strcat(success, system_info.version);
 		strcat(success, "\n");
 
-		strcat(success, "Machne: ");
+		strcat(success, "Machine: ");
 		strcat(success, system_info.machine);
 		strcat(success, "\n");
 		
